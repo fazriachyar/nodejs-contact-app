@@ -46,27 +46,28 @@ if (!fs.existsSync(dataPath)) {
     fs.writeFileSync(dataPath, '[]', 'utf-8')
 }
 
-const pertanyaan1 = () => {
+const tulisPertanyaan = (pertanyaan) => {
     return new Promise((resolve, reject) => {
-        rl.question('masukkan nama anda : ', (nama) => {
+        rl.question(pertanyaan, (nama) => {
             resolve(nama);
         })
     })
 }
 
-const pertanyaan2 = () => {
-    return new Promise((resolve, reject) => {
-        rl.question('masukkan nomor anda : ', (nomor) => {
-            resolve(nomor);
-        })
-    })
-}
+// const pertanyaan2 = () => {
+//     return new Promise((resolve, reject) => {
+//         rl.question('masukkan nomor anda : ', (nomor) => {
+//             resolve(nomor);
+//         })
+//     })
+// }
 
 const main = async() => {
-    const nama = await pertanyaan1();
-    const nomor = await pertanyaan2();
+    const nama = await tulisPertanyaan("Siapa nama anda ? : ");
+    const nomor = await tulisPertanyaan("Berapa nomor telepon anda ? : ");
+    const email = await tulisPertanyaan("masukkan email anda : ")
 
-    const contact = { nama, nomor};
+    const contact = { nama, nomor, email};
     const file = fs.readFileSync('data/contacts.json', 'utf8');
     const contacts = JSON.parse(file);
 
