@@ -46,22 +46,59 @@ if (!fs.existsSync(dataPath)) {
     fs.writeFileSync(dataPath, '[]', 'utf-8')
 }
 
-rl.question('masukkan nama anda : ', (nama) => {
-    rl.question('masukkan nomor hp anda : ', (nomor) => {
+const pertanyaan1 = () => {
+    return new Promise((resolve, reject) => {
+        rl.question('masukkan nama anda : ', (nama) => {
+            resolve(nama);
+        })
+    })
+}
+
+const pertanyaan2 = () => {
+    return new Promise((resolve, reject) => {
+        rl.question('masukkan nomor anda : ', (nomor) => {
+            resolve(nomor);
+        })
+    })
+}
+
+const main = async() => {
+    const nama = await pertanyaan1();
+    const nomor = await pertanyaan2();
+
+    const contact = { nama, nomor};
+    const file = fs.readFileSync('data/contacts.json', 'utf8');
+    const contacts = JSON.parse(file);
+
+    contacts.push(contact);
+
+    fs.writeFileSync('data/contacts.json', JSON.stringify(contacts));
+
+    console.log(`terima kasih, semoga harimu menyenangkan :)`);
+
+    rl.close();
+
+}
+
+main();
+
+
+// rl.question('masukkan nama anda : ', (nama) => {
+//     rl.question('masukkan nomor hp anda : ', (nomor) => {
         
-        const contact = { nama, nomor};
-        const file = fs.readFileSync('data/contacts.json', 'utf8');
-        const contacts = JSON.parse(file);
+//         const contact = { nama, nomor};
+//         const file = fs.readFileSync('data/contacts.json', 'utf8');
+//         const contacts = JSON.parse(file);
 
-        contacts.push(contact);
+//         contacts.push(contact);
 
-        fs.writeFileSync('data/contacts.json', JSON.stringify(contacts));
+//         fs.writeFileSync('data/contacts.json', JSON.stringify(contacts));
 
-        console.log(`terima kasih, semoga harimu menyenangkan :)`);
+//         console.log(`terima kasih, semoga harimu menyenangkan :)`);
 
-        rl.close();
-    });
-});
+//         rl.close();
+//     });
+// });
 
 
 
